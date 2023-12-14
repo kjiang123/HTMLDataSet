@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="myChart"></canvas>
+</body>
+
+<script>
+    async function getData(){
+        const repsonse = await fetch("vgsales_.csv");
+        const data = await response.text();
+        const rows = data.split("\n").slice(1);
+        let newData =[]
+        rows.forEach((elem) => {
+            const row = elem.split(",");
+            const title = row[0];
+            const salesNA = row[5];
+            newData.push([title,salesNA]);
+        })
+        return newData;
+    }
+
+    async function displayData() {
+        let rows = await getData();
+
+        let titles = [];
+        let salesNA = [];
+        rows.forEach(elm => titles.push(elm[0]));
+        rows.forEach(elm => salesNA.push(elm[5]));
+
+        const ctx = document.getElementById('myChart')
+
+        new Chart(ctx, {
+        type: 'bar',
+
+        data: {
+            labels: title,
+            datasets: [{
+            label: 'Sales In NA',
+            data: salesNA,
+            borderColor: 'rgb(100, 100, 100)',
+
+            borderWidth: 2,
+            beginAtZero: false,
+            }]
+        },
+        options: {
+
+            scales{
+                y:{
+                    beginAtZero: false,
+                    ticks: {callback: function(value, index, ticks) {
+                        console.log(value);
+                        return value + 'Mil';
+            }}
+         
+    }}}});
+}
+
+</script>
+</html>
