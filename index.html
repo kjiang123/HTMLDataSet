@@ -27,40 +27,42 @@
     }
 
     async function displayData() {
-        let rows = await getData();
+    let rows = await getData();
 
-        let titles = [];
-        let salesNA = [];
-        rows.forEach(elm => titles.push(elm[0]));
-        rows.forEach(elm => salesNA.push(elm[5]));
+    let titles = [];
+    let salesNA = [];
 
-        const ctx = document.getElementById('myChart')
+    rows.forEach(elm => titles.push(elm[0]));
+    rows.forEach(elm => salesNA.push(elm[5]));
 
-        new Chart(ctx, {
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
         type: 'bar',
-
         data: {
-            labels: title,
+            labels: titles,
             datasets: [{
-            label: 'Sales In NA',
-            data: salesNA,
-            borderColor: 'rgb(100, 100, 100)',
-
-            borderWidth: 2,
-            beginAtZero: false,
+                label: 'Sales In NA',
+                data: salesNA,
+                borderColor: 'rgb(100, 100, 100)',
+                borderWidth: 2,
+                beginAtZero: false,
             }]
         },
         options: {
-
-            scales{
-                y:{
+            scales: {
+                y: {
                     beginAtZero: false,
-                    ticks: {callback: function(value, index, ticks) {
-                        console.log(value);
-                        return value + 'Mil';
-            }}
-         
-    }}}});
+                    ticks: {
+                        callback: function(value, index, ticks) {
+                            console.log(value);
+                            return value + 'Mil';
+                        }
+                    }
+                }
+            }
+        }
+    });
 }
 
 </script>
