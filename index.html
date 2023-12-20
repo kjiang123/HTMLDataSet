@@ -13,7 +13,7 @@
 
 <script>
     async function getData(){
-        const repsonse = await fetch("vgsales_.csv");
+        const response = await fetch("vgsales_.csv");
         const data = await response.text();
         const rows = data.split("\n").slice(1);
         let newData =[]
